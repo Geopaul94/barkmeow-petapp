@@ -1,0 +1,148 @@
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
+
+// class FormCntainerWidget extends StatefulWidget {
+//   final TextEditingController? controller;
+//   final Key? fieldkey;
+//   final bool? isPasswordField;
+//   final String? labelText;
+//   final String? hintText;
+//   final String? helperText;
+
+//   final FormFieldSetter<String>? onSaved;
+//   final FormFieldValidator<String>? validator;
+//   final ValueChanged<String>? onFieldSubmitted;
+//   final TextInputType? inputType;
+//   const FormCntainerWidget({
+//     this.controller,
+//     this.fieldkey,
+//     this.isPasswordField,
+//     this.labelText,
+//     this.hintText,
+//     this.helperText,
+//     this.inputType,
+//     this.onFieldSubmitted,
+//     this.onSaved,
+//     this.validator,
+//   });
+
+//   @override
+//   State<FormCntainerWidget> createState() => _FormCntainerWidgetState();
+// }
+
+// class _FormCntainerWidgetState extends State<FormCntainerWidget> {
+//   bool _obscureText = true;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       decoration: BoxDecoration(
+//         color: Colors.greenAccent,
+//         borderRadius: BorderRadius.circular(10),
+//       ),
+//       child: new TextFormField(
+//         style: TextStyle(
+//           color: Colors.amber,
+//         ),
+//         controller: widget.controller,
+//         keyboardType: widget.inputType,
+//         key: widget.fieldkey,
+//         obscureText: widget.isPasswordField == true ? _obscureText : false,
+//         onSaved: widget.onSaved,
+//         validator: widget.validator,
+//         onFieldSubmitted: widget.onFieldSubmitted,
+//         decoration: InputDecoration(
+//           border: InputBorder.none,
+//           filled: true,
+//           hintText: widget.hintText,
+//           hintStyle: TextStyle(color: Colors.black),
+//           suffixIcon: GestureDetector(
+//             onTap: () {
+//               setState(() {
+//                 _obscureText = !_obscureText;
+//               });
+//             },
+//             child: widget.isPasswordField==true? Icon(_obscureText ? Icons.visibility_off:Icons.visibility,color: _obscureText ==false ? Colors.blue :Colors.grey):
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+import 'package:flutter/material.dart';
+
+class FormCntainerWidget extends StatefulWidget {
+  final TextEditingController? controller;
+  final Key? fieldkey;
+  final bool? isPasswordField;
+  final String? labelText;
+  final String? hintText;
+  final String? helperText;
+
+  final FormFieldSetter<String>? onSaved;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onFieldSubmitted;
+  final TextInputType? inputType;
+  
+  const FormCntainerWidget({
+    this.controller,
+    this.fieldkey,
+    this.isPasswordField,
+    this.labelText,
+    this.hintText,
+    this.helperText,
+    this.inputType,
+    this.onFieldSubmitted,
+    this.onSaved,
+    this.validator,
+  });
+
+  @override
+  State<FormCntainerWidget> createState() => _FormCntainerWidgetState();
+}
+
+class _FormCntainerWidgetState extends State<FormCntainerWidget> {
+  bool _obscureText = true;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.greenAccent,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextFormField(
+        style: TextStyle(
+          color: Colors.amber,
+        ),
+        controller: widget.controller,
+        keyboardType: widget.inputType,
+        key: widget.fieldkey,
+        obscureText: widget.isPasswordField == true ? _obscureText : false,
+        onSaved: widget.onSaved,
+        validator: widget.validator,
+        onFieldSubmitted: widget.onFieldSubmitted,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          filled: true,
+          hintText: widget.hintText,
+          hintStyle: TextStyle(color: Colors.black),
+          suffixIcon: widget.isPasswordField == true
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: _obscureText == false ? Colors.blue : Colors.grey,
+                  ),
+                )
+              : null, // Corrected: Provide null if not a password field
+        ),
+      ),
+    );
+  }
+}
