@@ -90,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 text: TextSpan(
                   text: 'Already have an account? ',
                   style: const TextStyle(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 19, 19, 19),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                   children: [
@@ -105,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                                builder: (context) =>  LoginPage()),
                           );
                         },
                     ),

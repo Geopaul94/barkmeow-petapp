@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:petapp/Screens/firebase/splash_screen.dart';
-import 'package:petapp/Screens/homepage.dart';
+// import 'package:petapp/Screens/homepage.dart';
 import 'package:petapp/firebase_options.dart';
 
 Future main() async {
