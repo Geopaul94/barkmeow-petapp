@@ -69,6 +69,7 @@
 //     );
 //   }
 // }
+
 import 'package:flutter/material.dart';
 
 class FormCntainerWidget extends StatefulWidget {
@@ -94,7 +95,7 @@ class FormCntainerWidget extends StatefulWidget {
     this.inputType,
     this.onFieldSubmitted,
     this.onSaved,
-    this.validator,
+    this.validator, required Null Function(dynamic value) onChanged, String? errorText, 
   });
 
   @override
@@ -113,8 +114,8 @@ class _FormCntainerWidgetState extends State<FormCntainerWidget> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
-        style: TextStyle(
-          color: Colors.amber,
+        style: const TextStyle(
+          color: Colors.black,
         ),
         controller: widget.controller,
         keyboardType: widget.inputType,
@@ -124,10 +125,11 @@ class _FormCntainerWidgetState extends State<FormCntainerWidget> {
         validator: widget.validator,
         onFieldSubmitted: widget.onFieldSubmitted,
         decoration: InputDecoration(
+
           border: InputBorder.none,
           filled: true,
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: Colors.black),
+          hintStyle: const TextStyle(color: Colors.black),
           suffixIcon: widget.isPasswordField == true
               ? GestureDetector(
                   onTap: () {

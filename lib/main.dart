@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
-import 'package:petapp/Screens/firebase/splash_screen.dart';
-// import 'package:petapp/Screens/homepage.dart';
+import 'package:petapp/Screens/sample/sample.dart';
+import 'package:petapp/screens/firebase/splash_screen.dart';
+import 'package:petapp/screens/main_pages/dashboard.dart';
+
 import 'package:petapp/firebase_options.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Barkmeow',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: SplashScreen());
+        // home: const SplashScreen());
+        home: const Sample()
+    );
   }
 }

@@ -1,10 +1,11 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:petapp/Screens/components/components.dart';
-import 'package:petapp/Screens/firebase/user_auth/sign_up_page.dart';
-import 'package:petapp/Screens/firebase/widgets/form_container_widget.dart';
-import 'package:petapp/Screens/homepage.dart';
+import 'package:lottie/lottie.dart';
+import 'package:petapp/screens/components/components.dart';
 
+import 'package:petapp/screens/firebase/user_auth/sign_up_page.dart';
+
+import 'package:petapp/screens/main_pages/bottom_navigator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,128 +15,210 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email = '';
+  String _password = '';
+  bool _emailValid = false;
+  bool _passwordValid = false;
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
-        ),
-        body: Stack(
-        children: [
-          const OnbordingContainers(),
-        //   Image.asset(
-        //  'assets/images/your_image.png', // Replace with your image path
-        //     width: double.infinity,
-        //     height: 400, // Adjust height as needed
-        //     fit: BoxFit.cover, // Adjust image fit as desired
-        //   ),
-
-          // Positioned container
-          Positioned(
-            top: 420,
-            left: 50,
-            child: Container(
-              width: 285,
-              height:270,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 203, 17, 144).withOpacity(0.4),
-                    blurRadius: 15,
-                    spreadRadius: 5,
-                    offset: Offset(5, 5),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-  
-                children: [
-                  
-                  
-                  FormCntainerWidget(hintText: "Email",
-                  isPasswordField: false,
-                  
-                  
-                  ),const SizedBox(height: 15),
-                   FormCntainerWidget(hintText: "Password",
-                  isPasswordField: true,
-                  
-                  
-                  ),
-                  
-                  // const TextField(
-                  //   decoration: InputDecoration(
-                  //     labelText: 'Email',
-                  //   ),
-                  // ),
-                  const SizedBox(height: 15),
-                  // const TextField(
-                  //   obscureText: true,
-                  //   decoration: InputDecoration(
-                  //     labelText: 'Password',
-                  //   ),
-                  // ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,MaterialPageRoute(builder: ((context) =>const HomePage(
-
-                      ) 
-                      ) 
-                   ) );}
-                   , child: const Text('Login'),
-                  ),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [
+                Color.fromARGB(255, 16, 24, 177),
+                Color.fromARGB(255, 143, 145, 186),
+              ],
             ),
           ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const OnbordingContainers(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: MediaQuery.of(context).size.width * 0.3,
 
-        
-        Positioned(
-  top: 720, // Adjust vertical position as needed
-  left: 85, // Centered horizontally within container's width
-
-  // Wrap text and button in a Column for vertical stacking
-  child: Column(
-    children: [
-      // RichText allows formatting within Text widget
-      RichText(
-        text: TextSpan(
-          text: 'Don\'t have an account? ',
-          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        
-      ),
-      ),
-
-      
-    TextButton(
-  onPressed: () => Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (context) => SignUpPage()),
-    (route) => false, // Remove all previous routes
-  ),
-        child: Text(
-          'Sign Up',
-          style: TextStyle(color: Colors.purple, fontSize: 20, fontWeight: FontWeight.bold),
+                // decoration: BoxDecoration(color: Colors.amber),
+                child: Lottie.asset(
+                  'assets/dog.json',
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                width: 285,
+                height: 270,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 1, 1, 1).withOpacity(0.4),
+                      blurRadius: 15,
+                      spreadRadius: 5,
+                      offset: const Offset(5, 5),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(15),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          hintText: 'Email',
+                          errorText: _emailValid
+                              ? null
+                              : 'Please enter a valid Gmail or Outlook email',
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color:
+                                    _emailValid ? Colors.green : Colors.black),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color:
+                                    _emailValid ? Colors.green : Colors.blue),
+                          ),
+                          errorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                          focusedErrorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _email = value;
+                            _emailValid = RegExp(
+                                    r'^[a-zA-Z0-9._%+-]+@(gmail|outlook)\.com$')
+                                .hasMatch(value);
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      // FormCntainerWidget(
+                        
+                      //   controller: _passwordController,
+                      //   hintText: "Password",
+                      //   isPasswordField: true,
+                      // ),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          errorText: _passwordValid
+                              ? null
+                              : 'Please enter your password',
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: _passwordValid
+                                    ? Colors.green
+                                    : Colors.black),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: _passwordValid
+                                    ? Colors.green
+                                    : Colors.blue),
+                          ),
+                          errorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                          focusedErrorBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                            _passwordValid = value.isNotEmpty;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blue,
+                        ),
+                        onPressed: () {
+                          _signUp();
+                        },
+                        child: const Text('Login'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              RichText(
+                text: const TextSpan(
+                  text: 'Don\'t have an account? ',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
+                  (route) => false, // Remove all previous routes
+                ),
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Colors.purple,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ],
-  ),
-),
-    ]  ),
     );
   }
+
+  void _signUp() async {
+    // String username = _usernameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      // await FirebaseAuth.instance
+      //     .signInWithEmailAndPassword(email: email, password: password);
+      // await _auth.signInWithEmailAndPassword(email, password);
+      print("succesful");
+
+      Navigator.push(context, MaterialPageRoute(
+        builder: ((context) {
+          return BottomNavigator();
+        }),
+      ));
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
 }
-
-
-   

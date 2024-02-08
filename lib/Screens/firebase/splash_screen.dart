@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:petapp/screens/firebase/user_auth/login_page.dart';
+import 'package:petapp/screens/onboarding_screens/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:petapp/Screens/onboarding_screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   final Widget? child;
@@ -15,77 +16,104 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreen extends State<SplashScreen> {
   @override
-  void initState() {
-    Future.delayed(Duration(seconds: 6), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OnboardingScreen(),
-        ),
-      );
-    });
+  // void initState() {
+  //   Future.delayed(const Duration(seconds: 6), () {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const OnboardingScreen(),
+  //       ),
+  //     );
+  //   });
+  //   super.initState();
+  // }
+   void initState() {
     super.initState();
+    // Check if the app has been opened before
+    _checkFirstSeen();
   }
+//this code for cheking while the user installing the app first time or not
+
+  Future<void> _checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+       // Delay and navigate to onboarding screen
+      Future.delayed(const Duration(seconds: 6), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+      
+      );
+      // If the app has been opened before, navigate directly to login page
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const LoginPage()),
+      // );
+    } else {
+      // If it's the first time opening the app, show the splash screen
+      await prefs.setBool('seen', true);
+      // Delay and navigate to onboarding screen
+      Future.delayed(const Duration(seconds: 6), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        );
+      }
+      
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Color.fromARGB(255, 16, 24, 177),
-                    Color.fromARGB(255, 143, 145, 186),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Colors.blue,
+                  Colors.green,
+                ],
               ),
-              padding: EdgeInsets.all(5),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height *
-                        0.5, // Limit the height of the animation
-                    child: Container(
-                      child: Lottie.asset(
-                        'assets/full.json',
-                      ),
-                    ),
+            ),
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Lottie.asset(
+                    'assets/full.json',
                   ),
-                  SizedBox(
-                    height: 20, // Adjust the height as needed
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width *
-                        0.7, // Set the width of the percentage container
-                    child: LinearPercentIndicator(
+                ),
+                const SizedBox(
+                  height: .2, // Adjust the space between the image and progress indicator
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width * 0.8,
                       lineHeight: 10,
-                      percent: 1, // Adjust the percentage as needed
-                      progressColor: Colors.amber, // Color of the indicator
-                      backgroundColor:
-                          Colors.purple[100], // Color of the background
+                      percent: 1,
+                      progressColor: Colors.amber,
+                      backgroundColor: Colors.purple[100],
                       animation: true,
                       animationDuration: 4000,
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height *
-                        0.4, // Adjust the space above the bottom
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
@@ -93,3 +121,4 @@ class _SplashScreen extends State<SplashScreen> {
     );
   }
 }
+

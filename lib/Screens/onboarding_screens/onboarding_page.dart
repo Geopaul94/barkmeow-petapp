@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
-class PageThree extends StatelessWidget {
-  const PageThree({Key? key}) : super(key: key); 
+class OnboardingPage extends StatelessWidget {
+  final String imagePath;
+  final String text;
+ 
+
+  const OnboardingPage({
+    Key? key,
+    required this.text,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +30,15 @@ class PageThree extends StatelessWidget {
             const SizedBox(
               height: 70,
             ),
-            const Text(
-              "Your best buddy",
-              style: TextStyle(
+            Text(
+              text,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: Lottie.asset(
-                'assets/cat.json',
-              ),
-            ),
+            Container(height: 450, width: 450, child: Image.asset(imagePath)),
             const SizedBox(
               height: 20,
             ),
