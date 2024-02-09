@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petapp/screens/addpet.dart';
+import 'package:petapp/screens/main_pages/dashboard/dashboard.dart';
 import 'package:petapp/screens/main_pages/training.dart';
-import 'package:petapp/screens/main_pages/dashboard.dart';
+
 import 'package:petapp/screens/main_pages/reminders.dart';
 import 'package:petapp/screens/main_pages/homepage.dart';
 
@@ -13,7 +14,8 @@ class BottomNavigator extends StatefulWidget {
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
+  late PageController _pageController;
 
   final List<Widget> _pages = [
     const HomePage(),
@@ -23,9 +25,24 @@ class _BottomNavigatorState extends State<BottomNavigator> {
     const DashBoard(),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
+    
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+    _selectedIndex = index;
+      _pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
     });
   }
 
@@ -33,7 +50,15 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
-      body: _pages[_selectedIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepPurple,
         selectedItemColor: const Color.fromARGB(255, 17, 16, 16),
@@ -58,7 +83,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
             icon: Icon(Icons.pets),
             label: 'Pets',
           ),
-        
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/screens/firebase/user_auth/login_page.dart';
+import 'package:petapp/screens/firebase/user_auth/sign_up_page.dart';
+import 'package:petapp/screens/main_pages/dashboard/log_out.dart';
 import 'package:petapp/screens/widget_refractoring/customappbar%20.dart';
 
 import 'package:petapp/screens/widget_refractoring/dashboard/dashboardcontainer.dart';
@@ -27,9 +30,11 @@ class DashBoard extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(),
+              const CustomAppBar(
+                text: 'Profile',
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * .15,
+                height: MediaQuery.of(context).size.height * .051,
               ),
               Container(
                 height: MediaQuery.of(context).size.height * .70,
@@ -69,8 +74,8 @@ class DashBoard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -110,14 +115,22 @@ class DashBoard extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const DashboardContainer(
+                      DashboardContainer(
                         text: 'Log Out',
                         icon: Icons.logout,
+                        onTap: () {
+                           showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomeAlertBox(); // Show the CustomAlertBox
+            },
+          );
+                        },
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 10,
                       ),
-                      const DashboardContainer(
+                      DashboardContainer(
                         text: 'Privacy Policy ',
                         icon: Icons.policy,
                       ),
@@ -131,9 +144,17 @@ class DashBoard extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const DashboardContainer(
+                      DashboardContainer(
                         text: 'About Us',
                         icon: Icons.help,
+                        onTap: () {
+                          print('Container tapped');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpPage(),
+                              ));
+                        },
                       ),
                     ],
                   ),

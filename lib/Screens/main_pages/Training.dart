@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 
+import '../widget_refractoring/customappbar .dart';
 
 class Training extends StatelessWidget {
   const Training({super.key});
@@ -9,32 +8,13 @@ class Training extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        // appBar: CustomAppBar({}, title: 'Training'), // Pass an empty map if not needed
-
-        body: SafeArea(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  Color.fromARGB(255, 16, 24, 177),
-                  Color.fromARGB(255, 143, 145, 186),
-                ],
-              ),
-            ),
-            child: const Column(
-              children: [
-                Expanded(
-                    child: const Text(
-                        "Welcome to Training Page")), // Allow text to expand
-                // BottmNavigator(),
-              ],
-            ),
-          ),
-        ));
+        body: Container(
+      // height: MediaQuery.of(context).size.height,
+      // width: MediaQuery.of(context).size.width,
+      color: Color.fromARGB(226, 224, 218, 218),
+      child: Column(children: [
+        CustomAppBar(),
+      ]),
+    ));
   }
 }

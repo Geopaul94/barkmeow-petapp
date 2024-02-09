@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class DashboardContainer extends StatelessWidget {
   final IconData? icon;
   final String text;
+  final VoidCallback? onTap;
 
-  const DashboardContainer({this.icon, required this.text, super.key});
+  const DashboardContainer(
+      {this.icon, required this.text, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +21,11 @@ class DashboardContainer extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .075,
       width: MediaQuery.of(context).size.width,
       child: GestureDetector(
-        onTap: (
-          
-        ) {
+        onTap:
+          onTap,
           // Perform your actions here
-          print('Container tapped');
-        },
+          
+        
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
