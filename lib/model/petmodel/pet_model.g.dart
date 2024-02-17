@@ -20,7 +20,7 @@ class PetModelAdapter extends TypeAdapter<PetModel> {
       id: fields[0] as String,
       name: fields[1] as String,
       age: fields[2] as int?,
-      isMale: fields[3] as bool,
+      gender: fields[3] as String,
       image: fields[4] as String?,
       weight: fields[5] as double?,
       paws: fields[6] as String,
@@ -38,7 +38,7 @@ class PetModelAdapter extends TypeAdapter<PetModel> {
       ..writeByte(2)
       ..write(obj.age)
       ..writeByte(3)
-      ..write(obj.isMale)
+      ..write(obj.gender)
       ..writeByte(4)
       ..write(obj.image)
       ..writeByte(5)

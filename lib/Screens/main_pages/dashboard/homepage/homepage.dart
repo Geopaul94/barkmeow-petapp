@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-              const Column(
+               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   HorizontalCatCard(), // Wrapped with Expanded

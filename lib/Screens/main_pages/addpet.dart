@@ -20,23 +20,26 @@ class AddPet extends StatefulWidget {
 
 class _AddPetState extends State<AddPet> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _textController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   final _focusNode = FocusNode();
   String? _selectedGender; // Set a default value for _selectedGender
   bool isSelected = false; // Tracks selection state
   String dropdownvalue = '';
   String? _selectedPaws;
   final ImagePicker _picker = ImagePicker();
-
+  TextEditingController ageController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   XFile? _image;
 
-  File? image;
+  String? image;
   Future pickImage() async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => this.image = imageTemp);
+      _image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (_image != null) {
+        setState(() {
+          image = _image!.path;
+        });
+      }
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -50,11 +53,11 @@ class _AddPetState extends State<AddPet> {
 
   @override
   Widget build(BuildContext context) {
+    // double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
         color: const Color.fromARGB(255, 236, 231, 231),
         child: Column(children: [
           const SizedBox(
@@ -139,7 +142,7 @@ class _AddPetState extends State<AddPet> {
                   height: 100,
                   fit: BoxFit.cover,
                 )
-              : const Text('No image selected.'),
+              : Text('No image selected.'),
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.all(15.0),
@@ -172,6 +175,7 @@ class _AddPetState extends State<AddPet> {
                           const SizedBox(width: 8.0),
                           Expanded(
                             child: TextFormField(
+                              controller: nameController,
                               focusNode: _focusNode,
                               decoration: const InputDecoration(
                                 border: UnderlineInputBorder(
@@ -205,6 +209,7 @@ class _AddPetState extends State<AddPet> {
                           const SizedBox(width: 8.0),
                           Expanded(
                             child: TextFormField(
+                              controller: ageController,
                               decoration: const InputDecoration(
                                 border: UnderlineInputBorder(),
                                 focusedBorder: UnderlineInputBorder(
@@ -277,6 +282,7 @@ class _AddPetState extends State<AddPet> {
                           const SizedBox(width: 8.0),
                           Expanded(
                             child: TextFormField(
+                              controller: weightController,
                               decoration: const InputDecoration(
                                 border: UnderlineInputBorder(),
                                 focusedBorder: UnderlineInputBorder(
@@ -340,14 +346,16 @@ class _AddPetState extends State<AddPet> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Ensure that all required variables are defined here
-                          const String name = ''; // Define the name variable
-                          int? age; // Define the age variable
-                          const bool isMale =
-                              false; // Define the isMale variable
-                          const String image = ''; // Define the image variable
-                          double? weight; // Define the weight variable
-                          const String paws = ''; // D
+                          String name = nameController.text;
+                          int? age = int.parse(
+                              ageController.text); // Define the age variable
+                        String gender =_selectedGender ?? ""; // Define the isMale variable
+                          // String image = image;
+                          double weight  =double.parse(weightController.text);
+                          String paws = _selectedPaws ?? "";
+                          // Define the paws variable
+
+                          // Call the function to add pet data
                           addPetData(
                             petDetails: PetModel(
                               id: DateTime.now()
@@ -355,15 +363,18 @@ class _AddPetState extends State<AddPet> {
                                   .toString(),
                               name: name,
                               age: age,
-                              isMale: isMale,
+                              gender: gender,
                               image: image,
                               weight: weight,
                               paws: paws,
                             ),
                           );
 
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                          // Navigate to the home page after saving
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()),
                           );
                         },
                         style: ButtonStyle(

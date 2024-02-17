@@ -16,6 +16,7 @@ class CustomeAlertBox extends StatelessWidget {
         builder: (context) => const LoginPage()
       ));
     } catch (e) {
+      
       // Handle any errors that occur during logout
       print('Error logging out: $e');
     }

@@ -12,7 +12,7 @@ class PetModel {
   final int? age; // Changed type to int
 
   @HiveField(3)
-  final bool isMale;
+  final  String gender;
   @HiveField(4)
   final String? image;
   @HiveField(5)
@@ -28,7 +28,7 @@ class PetModel {
     required this.id,
     required this.name,
      this.age,
-    required this.isMale,
+    required this.gender,
    this.image,
      this.weight, 
      required

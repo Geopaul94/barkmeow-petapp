@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/hive/functions/pet_function/pet_hive_function.dart';
+import 'package:petapp/model/petmodel/pet_model.dart';
 
 class HorizontalCatCard extends StatelessWidget {
-  const HorizontalCatCard({Key? key});
-
+  HorizontalCatCard({Key? key});
+ 
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,8 +12,9 @@ class HorizontalCatCard extends StatelessWidget {
       width: 400,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: CatList.length,
         itemBuilder: (context, index) {
+        
           return Container(
             margin: const EdgeInsets.all(10),
             width: 350,
@@ -29,7 +32,7 @@ class HorizontalCatCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'Cat $index',
+                CatList[index].name,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

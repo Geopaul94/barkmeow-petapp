@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/hive/functions/pet_function/pet_hive_function.dart';
 
 class HorizontalDogCard extends StatelessWidget {
   const HorizontalDogCard({Key? key});
@@ -10,7 +11,7 @@ class HorizontalDogCard extends StatelessWidget {
       width: 400,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 5,
+        itemCount: DogList.length,
         itemBuilder: (context, index) {
           return Container(
             margin: const EdgeInsets.all(10),
@@ -29,7 +30,7 @@ class HorizontalDogCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'Dog $index',
+              DogList[index].name,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
