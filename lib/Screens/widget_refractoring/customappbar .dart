@@ -116,17 +116,14 @@ class CustomAppBar extends StatelessWidget {
                 color: Colors.blue,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        text!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
+                  child: Center(
+                    child: Text(
+                      text!,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 26.0,
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -136,4 +133,3 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 }
-

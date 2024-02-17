@@ -16,8 +16,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _password = '';
+  // String _email = '';
+  // String _password = '';
   bool _emailValid = false;
   bool _passwordValid = false;
 
@@ -79,14 +79,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'Email',
-                          errorText: _emailValid
-                              ? null
-                              : 'Please enter a valid Gmail or Outlook email',
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color:
@@ -106,54 +102,130 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _email = value;
                             _emailValid = RegExp(
                                     r'^[a-zA-Z0-9._%+-]+@(gmail|outlook)\.com$')
                                 .hasMatch(value);
                           });
                         },
-                      ),
-                      const SizedBox(height: 15),
-                      // FormCntainerWidget(
-                        
-                      //   controller: _passwordController,
-                      //   hintText: "Password",
-                      //   isPasswordField: true,
-                      // ),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Password',
-                          errorText: _passwordValid
-                              ? null
-                              : 'Please enter your password',
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: _passwordValid
-                                    ? Colors.green
-                                    : Colors.black),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: _passwordValid
-                                    ? Colors.green
-                                    : Colors.blue),
-                          ),
-                          errorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedErrorBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _password = value;
-                            _passwordValid = value.isNotEmpty;
-                          });
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an email';
+                          } else if (!RegExp(
+                                  r'^[a-zA-Z0-9._%+-]+@(gmail|outlook)\.com$')
+                              .hasMatch(value)) {
+                            return 'Please enter a valid Gmail or Outlook email';
+                          }
+                          return null; // Return null if the input is valid
                         },
                       ),
+
+//                       TextFormField(
+//   controller: _emailController,
+//   decoration: InputDecoration(
+//     hintText: 'Email',
+//     enabledBorder: UnderlineInputBorder(
+//       borderSide: BorderSide(color: _emailValid ? Colors.green : Colors.black),
+//     ),
+//     focusedBorder: UnderlineInputBorder(
+//       borderSide: BorderSide(color: _emailValid ? Colors.green : Colors.blue),
+//     ),
+//     errorBorder: UnderlineInputBorder(
+//       borderSide: BorderSide(color: Colors.red),
+//     ),
+//     focusedErrorBorder: UnderlineInputBorder(
+//       borderSide: BorderSide(color: Colors.red),
+//     ),
+//   ),
+//   onChanged: (value) {
+//     setState(() {
+//       _email = value;
+//     });
+//   },
+//   validator: (value) {
+//     if (value == null || value.isEmpty) {
+//       return 'Please enter an email';
+//     } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@(gmail|outlook)\.com$').hasMatch(value)) {
+//       return 'Please enter a valid Gmail or Outlook email';
+//     }
+//     return null; // Return null if the input is valid
+//   },
+// ),
+                      const SizedBox(height: 15),
+
+                      // TextFormField(
+                      //   controller: _passwordController,
+                      //   obscureText: true,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Password',
+                      //     errorText: _passwordValid
+                      //         ? null
+                      //         : 'Please enter your password',
+                      //     enabledBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //           color: _passwordValid
+                      //               ? Colors.green
+                      //               : Colors.black),
+                      //     ),
+                      //     focusedBorder: UnderlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //           color: _passwordValid
+                      //               ? Colors.green
+                      //               : Colors.blue),
+                      //     ),
+                      //     errorBorder: const UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.red),
+                      //     ),
+                      //     focusedErrorBorder: const UnderlineInputBorder(
+                      //       borderSide: BorderSide(color: Colors.red),
+                      //     ),
+                      //   ),
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       // _password = value;
+                      //       _passwordValid = value.isNotEmpty;
+                      //     });
+                      //   },
+                      // ),
+                     TextFormField(
+  controller: _passwordController,
+  obscureText: true,
+  decoration: InputDecoration(
+    hintText: 'Password',
+    errorText: _passwordValid ? null : 'Please enter your password',
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: _passwordValid ? Colors.green : Colors.black),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: _passwordValid ? Colors.green : Colors.blue),
+    ),
+    errorBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.red),
+    ),
+    focusedErrorBorder: const UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.red),
+    ),
+  ),
+  onChanged: (value) {
+    // Handle validation only after typing starts
+    if (value.isEmpty) {
+      // Reset validation and border color
+      _passwordValid = false;
+      setState(() {});
+      return;
+    }
+
+    // Perform desired validation
+    _passwordValid = value.length >= 8; // Example: Minimum length of 8 characters
+    setState(() {});
+  },
+),
+
+                     
+                     
+                     
+                     
+                     
+                     
                       const SizedBox(height: 20),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -214,7 +286,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.push(context, MaterialPageRoute(
         builder: ((context) {
-          return BottomNavigator();
+          return const BottomNavigator();
         }),
       ));
     } on FirebaseAuthException catch (e) {

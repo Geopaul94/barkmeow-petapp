@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+
+import 'package:petapp/model/petmodel/pet_model.dart';
 
 import 'package:petapp/screens/firebase/splash_screen.dart';
 
@@ -10,6 +13,12 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Hive.initFlutter();
+
+  if (!Hive.isAdapterRegistered(PetModelAdapter().typeId)) {
+    Hive.registerAdapter(PetModelAdapter());
+  }
+
   runApp(const MyApp());
 }
 

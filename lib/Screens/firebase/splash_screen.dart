@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:petapp/screens/firebase/user_auth/login_page.dart';
-import 'package:petapp/screens/firebase/user_auth/sign_up_page.dart';
 import 'package:petapp/screens/main_pages/bottom_navigator.dart';
-import 'package:petapp/screens/main_pages/homepage.dart';
-import 'package:petapp/screens/onboarding_screens/onboarding_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // class SplashScreen extends StatefulWidget {
 //   final Widget? child;
@@ -157,7 +153,7 @@ class _SplashScreen extends State<SplashScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => BottomNavigator()),
+        MaterialPageRoute(builder: (ctx) => const BottomNavigator()),
       );
     } else {
       Navigator.of(context).pushReplacement(

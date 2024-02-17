@@ -5,8 +5,12 @@ class DashboardContainer extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
 
-  const DashboardContainer(
-      {this.icon, required this.text, this.onTap, super.key});
+  const DashboardContainer({
+    this.icon,
+    required this.text,
+    this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,24 +25,22 @@ class DashboardContainer extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .075,
       width: MediaQuery.of(context).size.width,
       child: GestureDetector(
-        onTap:
-          onTap,
-          // Perform your actions here
-          
-        
+        onTap: onTap,
+        // Perform your actions here
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(
               icon,
-              size: 40, // Increase the icon size
+              size: 22, // Increase the icon size
             ),
             Text(
               text,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 14),
             ),
             const Icon(
-              size: 50,
+              size: 22,
               Icons.keyboard_arrow_right,
             )
           ],

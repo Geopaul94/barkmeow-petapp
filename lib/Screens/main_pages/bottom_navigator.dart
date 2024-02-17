@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:petapp/screens/addpet.dart';
+import 'package:petapp/petlist.dart';
+import 'package:petapp/screens/main_pages/addpet.dart';
 import 'package:petapp/screens/main_pages/dashboard/dashboard.dart';
 import 'package:petapp/screens/main_pages/training.dart';
 
 import 'package:petapp/screens/main_pages/reminders.dart';
-import 'package:petapp/screens/main_pages/homepage.dart';
+import 'package:petapp/screens/main_pages/dashboard/homepage/homepage.dart';
 
 class BottomNavigator extends StatefulWidget {
   const BottomNavigator({super.key});
@@ -14,11 +15,12 @@ class BottomNavigator extends StatefulWidget {
 }
 
 class _BottomNavigatorState extends State<BottomNavigator> {
+  // INDEX VLAUE CAHNGE TO HOME SCREEN FROM ADDPET
   int _selectedIndex = 2;
   late PageController _pageController;
 
   final List<Widget> _pages = [
-    const HomePage(),
+    HomePage(),
     const Reminders(),
     const AddPet(),
     const Training(),
@@ -29,7 +31,6 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _selectedIndex);
-    
   }
 
   @override
@@ -40,7 +41,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   void _onItemTapped(int index) {
     setState(() {
-    _selectedIndex = index;
+      _selectedIndex = index;
       _pageController.animateToPage(index,
           duration: const Duration(milliseconds: 300), curve: Curves.ease);
     });

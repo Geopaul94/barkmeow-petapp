@@ -6,10 +6,10 @@ class OnboardingPage extends StatelessWidget {
  
 
   const OnboardingPage({
-    Key? key,
+    super.key,
     required this.text,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class OnboardingPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Container(height: 450, width: 450, child: Image.asset(imagePath)),
+            SizedBox(height: 450, width: 450, child: Image.asset(imagePath)),
             const SizedBox(
               height: 20,
             ),

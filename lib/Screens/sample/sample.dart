@@ -10,7 +10,7 @@ class Sample extends StatelessWidget {
       body: SafeArea(
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 80,
               height: 70,
               child: Card(
@@ -35,10 +35,10 @@ class Sample extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 60,
             ),
-            Container(
+            SizedBox(
               width: 250, // Set desired width
               height: 70,
               child: Card(

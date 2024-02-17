@@ -11,8 +11,9 @@ class Training extends StatelessWidget {
         body: Container(
       // height: MediaQuery.of(context).size.height,
       // width: MediaQuery.of(context).size.width,
-      color: Color.fromARGB(226, 224, 218, 218),
-      child: Column(children: [
+      color: const Color.fromARGB(226, 224, 218, 218),
+      child: const Column(children: [
+        SizedBox(height: 60,),
         CustomAppBar(),
       ]),
     ));

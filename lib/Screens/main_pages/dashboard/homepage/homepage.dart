@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petapp/screens/widget_refractoring/horizontalcard/horizontal_cat_card.dart';
+import 'package:petapp/screens/widget_refractoring/horizontalcard/horizontal_dog_card.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +24,7 @@ class HomePage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: TextFormField(
@@ -43,10 +43,8 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height *
-                        0.075, // Adjust as needed
-                    width: MediaQuery.of(context).size.width *
-                        0.2, // Adjust as needed
+                    height: MediaQuery.of(context).size.height * 0.075,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -58,12 +56,9 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // SizedBox(width: 5),
                   Container(
-                    height: MediaQuery.of(context).size.height *
-                        0.075, // Adjust as needed
-                    width: MediaQuery.of(context).size.width *
-                        0.2, // Adjust as needed
+                    height: MediaQuery.of(context).size.height * 0.075,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -77,10 +72,15 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              const Expanded(
-                child: Center(child: Text("Welcome to Home Page ")),
+              const SizedBox(height: 15),
+              const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  HorizontalCatCard(), // Wrapped with Expanded
+                  SizedBox(height: 20),
+                  HorizontalDogCard(), // Wrapped with Expanded
+                ],
               ),
-              // /BottmNavigator(),
             ],
           ),
         ),
